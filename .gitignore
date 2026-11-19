@@ -1,0 +1,23 @@
+# 索引与缓存（本地产物，可由源文档重建）
+.index/
+.embedder.pkl
+.embed_cache.json
+.dspy_cache/
+
+# 测试产生的临时文件
+_testdata/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# 环境变量（含 key）
+.env
+.env.*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp

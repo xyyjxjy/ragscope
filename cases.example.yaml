@@ -1,0 +1,17 @@
+# RAG 检索诊断示例用例
+
+把你要测的文档放到 `docs/` 目录（支持 .md / .txt / .pdf / .docx），
+按下表格式写用例，然后跑：
+
+    python -m ragscope.cli index --docs ./docs
+    python -m ragscope.cli eval --cases cases.yaml --out report.md
+
+字段说明：
+    question          用户会怎么问（可以用口语，越真实越好）
+    expect_citation   期望的出处，填文档名或章节关键词；多个可接受答案用 | 分隔
+    expect_keywords   答案里应该出现的词，用于 DSPy 优化的 metric
+
+cases:
+  - question: 你的问题
+    expect_citation: 文档名|章节名
+    expect_keywords: 关键词1|关键词2

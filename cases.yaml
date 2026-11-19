@@ -1,0 +1,84 @@
+# RAG 检索诊断用例集（真实技术文档语料，10 篇 / 89 chunk）
+#
+# 设计原则：不能只测「关键词能对上」的简单问题，
+# 要包含需要语义理解、跨文档、术语密集的难例，
+# 否则 Recall 100% 没有说服力。
+
+cases:
+  # ---- 直接术语（简单，作为基线对照）----
+  - question: 判据强度分哪几档
+    expect_citation: design.md|results.md
+    expect_keywords: strong|medium|weak
+
+  - question: ASR 和 FRR 分别是什么
+    expect_citation: design.md|results.md|frr_report
+    expect_keywords: 攻击成功率|误拒率
+
+  # ---- 需要语义理解（用词与原文不同）----
+  - question: 怎么判断模型是不是真的被打穿了
+    expect_citation: design.md
+    expect_keywords: 判定器|证据
+
+  - question: 加固之后效果提升了多少
+    expect_citation: results.md
+    expect_keywords: 27.8|12.5
+
+  - question: 为什么不能把强弱判定器混在一起算
+    expect_citation: design.md
+    expect_keywords: 稀释|混算|禁止
+
+  # ---- 跨文档（答案分散在多处）----
+  - question: 断点续跑是怎么实现的
+    expect_citation: pitfalls.md|design.md
+    expect_keywords: 原子|快照|续跑
+
+  - question: 并发跑的时候怎么保证结果不出错
+    expect_citation: pitfalls.md|design.md
+    expect_keywords: 记账|主线程|并发
+
+  - question: 变异用了哪些算子
+    expect_citation: results.md|design.md
+    expect_keywords: split|b64|format_json
+
+  # ---- 数字/专有名词密集 ----
+  - question: LangChain 版本对照的 ASR 是多少
+    expect_citation: results.md|frr_report
+    expect_keywords: 37.5
+
+  - question: p 值 0.022 对应哪组对比
+    expect_citation: results.md|frr_report
+    expect_keywords: 27.8|12.5
+
+  - question: 2249 条用例是怎么来的
+    expect_citation: results.md|README
+    expect_keywords: garak|PyRIT|2249
+
+  # ---- 容易混淆的概念 ----
+  - question: agentkit 和 autoscan 有什么区别
+    expect_citation: agentkit.md|autoscan.md
+    expect_keywords: 框架|平台
+
+  - question: 什么情况下判定器要 SKIP
+    expect_citation: design.md|known-issues.md
+    expect_keywords: 证据|不适用|跳过
+
+  - question: 密钥泄露是怎么处理的
+    expect_citation: README|pitfalls.md
+    expect_keywords: 销毁|key|历史
+
+  # ---- 模糊/口语化（最考验语义匹配）----
+  - question: 这个工具能测什么不能测什么
+    expect_citation: known-issues.md|README
+    expect_keywords: 限制|不支持|已知
+
+  - question: 我要是想接自己的智能体该改哪里
+    expect_citation: README|INTEGRATION.md
+    expect_keywords: transport|接入
+
+  - question: 为什么数字有时候看着不对劲
+    expect_citation: pitfalls.md|design.md
+    expect_keywords: 分母|bug|污染
+
+  - question: 跑多久能出结果
+    expect_citation: pitfalls.md|README
+    expect_keywords: 小时|分钟|轮次
